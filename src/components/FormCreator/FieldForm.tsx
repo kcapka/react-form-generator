@@ -5,7 +5,8 @@ import FormInput from "../FormFieldUI/FormInput"
 
 
 export default function FieldForm({createdFields, setCreatedFields, index}:any) {
-    const showPlaceholder = createdFields[index]?.type !== "select" && createdFields[index]?.type !== "radio"
+    const showPlaceholder = createdFields[index]?.type !== "select" && createdFields[index]?.type !== "radio" && createdFields[index]?.type !== "submit";
+    const isSubmit = createdFields[index]?.type === "submit";
 
     const handleChange = (name:string, value:string) => {
         setCreatedFields({
@@ -41,15 +42,17 @@ export default function FieldForm({createdFields, setCreatedFields, index}:any) 
                 />
             </div>
             {/* Name */}
-            <div className="w-full">
-                <FormInput
-                    name="name"
-                    label="Name"
-                    handleChange={handleChange}
-                    type="text"
-                    value={createdFields[index]?.name}
-                />
-            </div>
+            {!isSubmit && (
+                <div className="w-full">
+                    <FormInput
+                        name="name"
+                        label="Name"
+                        handleChange={handleChange}
+                        type="text"
+                        value={createdFields[index]?.name}
+                    />
+                </div>
+            )}
             {/* Placeholder */}
             {showPlaceholder && (
                 <div className="w-full">
