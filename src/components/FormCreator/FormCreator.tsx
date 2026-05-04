@@ -1,32 +1,36 @@
 import { useState } from "react";
 import FieldForm from "./FieldForm";
+import { create } from "domain";
 
 export const FormCreator = () => {
-  const [openField, setOpenField] = useState<number | null>(null);
+  const [openField, setOpenField] = useState<number | null>(0);
   const [createdFields, setCreatedFields] = useState<any>({});
   const [newFieldIndex, setNewFieldIndex] = useState(0);
 
   const handleAddField = () => {
     setCreatedFields({ ...createdFields, [newFieldIndex]: { type: "text" } });
     setNewFieldIndex(newFieldIndex + 1);
+    setOpenField(newFieldIndex);
   };
 
   const handleDeleteField = (i: number) => {
     const filteredIndices = Object.keys(createdFields)?.filter(
       (idx) => Number(idx) !== i,
     );
-    console.log("Filtered", filteredIndices)
     let updated:any = {};
     for (let i = 0; i < filteredIndices.length; i++) {
         updated[i] = createdFields[filteredIndices[i]];
     }
     setNewFieldIndex(newFieldIndex - 1);
+    setOpenField(null);
     setCreatedFields(updated)
   };
 
   const handleFieldOpen = (i: number) => {
     openField === i ? setOpenField(null) : setOpenField(i);
   };
+
+  console.log("currentFields", createdFields)
 
   return (
     <section className="default-px default-py">
@@ -78,7 +82,7 @@ export const FormCreator = () => {
                         </svg>
                       </span>
                       <p className="text-offwhite text-lg font-medium leading-none">
-                        {createdFields[i]?.name || "Field"}
+                        {createdFields[i]?.name || "New field"}
                       </p>
                     </div>
                     <button
