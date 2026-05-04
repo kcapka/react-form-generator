@@ -1,7 +1,8 @@
 import { useState } from "react";
+import dynamic from "next/dynamic";
 import FieldForm from "./FieldForm";
-import { create } from "domain";
-import CodeViewer from "./CodeViewer";
+
+const CodeViewer = dynamic(() => import("./CodeViewer"), { ssr: false });
 
 export const FormCreator = () => {
   const [openField, setOpenField] = useState<number | null>(0);
@@ -123,7 +124,7 @@ export const FormCreator = () => {
         {/* Output code */}
         <div className="w-full max-w-[600px] mt-12">
           <h2 className="text-primary font-semibold text-2xl mb-6">React Code</h2>
-          <CodeViewer codeString={"export default function HelloWorld() {\n  return (\n    <p>Hello World</p>\n  )\n};"} />
+          <CodeViewer codeString={'export default function HelloWorld() {\n  return (\n    <p>Hello World</p>\n  );\n}'} />
         </div>
       </div>
     </section>
