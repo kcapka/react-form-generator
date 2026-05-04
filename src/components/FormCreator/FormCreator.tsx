@@ -32,8 +32,6 @@ export const FormCreator = () => {
     openField === i ? setOpenField(null) : setOpenField(i);
   };
 
-  console.log("currentFields", createdFields)
-
   return (
     <section className="default-px default-py">
       <div className="max-w-[1200px] mx-auto bg-background-cards rounded-lg p-6">
