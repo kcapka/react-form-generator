@@ -7,8 +7,9 @@ import FormInput from "../FormFieldUI/FormInput"
 export default function FieldForm({createdFields, setCreatedFields, index}:any) {
     const showPlaceholder = createdFields[index]?.type !== "select" && createdFields[index]?.type !== "radio" && createdFields[index]?.type !== "submit";
     const isSubmit = createdFields[index]?.type === "submit";
+    const [isRequired, setIsRequired] = useState(false);
 
-    const handleChange = (name:string, value:string) => {
+    const handleChange = (name:string, value:string | boolean) => {
         setCreatedFields({
             ...createdFields,
             [index]: {
@@ -65,6 +66,17 @@ export default function FieldForm({createdFields, setCreatedFields, index}:any) 
                     />
                 </div>
             )}
+            {/* Required */}
+            <div className="w-full">
+                <input id="isRequired" name="isRequired" type="checkbox" checked={createdFields[index]?.isRequired} className="hidden" />
+                <label htmlFor="isRequired" className="text-offwhite mb-1 block">Required?</label>
+                <button onClick={() => {
+                    handleChange("isRequired", isRequired);
+                    setIsRequired(!isRequired);
+                }} className={`${isRequired ? 'bg-primary' : 'bg-background'} duration-200 block w-10 h-6 mt-2 rounded-full border border-border cursor-pointer relative`}>
+                    <div className={`${isRequired ? 'right-1' : 'right-full translate-x-5'} duration-200 absolute w-4 rounded-full h-4 top-1/2 -translate-y-1/2 bg-white`} />
+                </button>
+            </div>
         </div>
     )
 }
